@@ -17,7 +17,7 @@ This repository contains a template that mimics the Austrian [Post AG - Vorlage 
 The [output.pdf](examples/output.pdf) gives the output of the [at-post-letter-template.py](at-post-letter-template.py) code.
 
 <p align="center">
-<img src="examples/output.png" alt="Output" width=510 high=720>
+<img src="examples/outputa.png" alt="Output" width=510 high=720>
 </p>
 
 ## Documentation

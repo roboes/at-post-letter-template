@@ -1,5 +1,5 @@
 ## Post AG - Vorlage mit Absender Letter Template using ReportLab
-# Last update: 2022-04-18
+# Last update: 2022-04-19
 
 
 # Template: https://www.tages-post.at/tp/fe/templates
@@ -13,7 +13,7 @@ import os
 import re
 
 import pandas as pd
-from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT
+from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT, TA_RIGHT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import cm
@@ -211,6 +211,35 @@ def create_document(title, author='', filename='Output.pdf', subject=''):
         )
 
 
+        ## Date
+
+        # Create variables
+        city = 'Musterort'
+        date = pd.Timestamp.now(tz='CET').date()
+
+        # Text
+        text = ("""{city}{date_day}. {date_month} {date_year}""").format(
+            city=city+', ' if city!='' else '',
+            date_day=date.strftime("%d"),
+            date_month=date.strftime("%B"),
+            date_year=date.strftime("%Y"),
+        )
+
+        # Create table frame
+        create_table_frame(
+            text=text,
+            fontName='Arial',
+            fontSize=11,
+            textHAlign=TA_RIGHT,
+            textVAlign='TOP',
+            frameWidth=6*cm,
+            frameHeight=0.5*cm,
+            frameHPosition=A4[0]-2.5*cm-6*cm,
+            frameVPosition=9.8*cm,
+            showBoundary=False,
+        )
+
+
         ## Inhalt
 
         # Text
@@ -240,7 +269,7 @@ def create_document(title, author='', filename='Output.pdf', subject=''):
             text=text,
             fontName='Arial',
             fontSize=11,
-            textHAlign=TA_LEFT,
+            textHAlign=TA_JUSTIFY,
             textVAlign='TOP',
             frameWidth=16*cm,
             frameHeight=16.95*cm,

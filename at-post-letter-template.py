@@ -1,16 +1,18 @@
 ## Post AG - Vorlage mit Absender Letter Template using ReportLab
-# Last update: 2022-04-19
+# Last update: 2022-05-05
 
 
-# Template: https://www.tages-post.at/tp/fe/templates
+# Template: https://www.einfach-brief.at/fe/vorlagen
 
 
 # Erase all declared global variables
 globals().clear()
 
 # Import packages
+import locale
 import os
 import re
+import sys
 
 import pandas as pd
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT, TA_RIGHT
@@ -24,6 +26,12 @@ from reportlab.platypus import Paragraph, KeepInFrame, Table, TableStyle
 
 # Set working directory to user's 'Downloads' folder
 os.chdir(os.path.join(os.path.expanduser('~'), r'Downloads'))
+
+# Locale settings
+if sys.platform == 'win32':
+    locale.setlocale(locale.LC_ALL, 'de_DE')
+else:
+    locale.setlocale(locale.LC_ALL, 'de_DE.utf8')
 
 
 
@@ -44,7 +52,7 @@ def create_table_frame(text, frameWidth, frameHeight, frameHPosition, frameVPosi
     text = re.sub(r'\n', '<br/>', text)
     
     # Create ReportLab Paragraph object and apply font styles to text
-    text = Paragraph(text, ParagraphStyle(name='', fontName=fontName, fontSize=fontSize, textColor=textColor, alignment=textHAlign), encoding='utf8')
+    text = Paragraph(text, ParagraphStyle(name='', fontName=fontName, fontSize=fontSize, leading=(12 if fontSize >= 10 else 9), textColor=textColor, alignment=textHAlign), encoding='utf8')
     
     # In case of long text: shrink to fit inside table frame
     text = KeepInFrame(
@@ -165,12 +173,16 @@ def create_document(title, author='', filename='Output.pdf', subject=''):
         create_table_frame(
             text=text,
             fontName='Arial',
-            fontSize=9,
+            fontSize=8,
             textHAlign=TA_LEFT,
             textVAlign='BOTTOM',
+            textLeftPadding=0.5*cm,
+            textRightPadding=0.1*cm,
+            textTopPadding=0.3*cm,
+            textBottomPadding=0.1*cm,
             frameWidth=9*cm,
             frameHeight=1.5*cm,
-            frameHPosition=2.5*cm,
+            frameHPosition=2*cm,
             frameVPosition=4.7*cm,
             showBoundary=False,
         )
@@ -199,13 +211,13 @@ def create_document(title, author='', filename='Output.pdf', subject=''):
             fontSize=11,
             textHAlign=TA_LEFT,
             textVAlign='MIDDLE',
-            textLeftPadding=0.1,
-            textRightPadding=0.1,
-            textTopPadding=0.1,
-            textBottomPadding=0.1,
+            textLeftPadding=0.5*cm,
+            textRightPadding=0.1*cm,
+            textTopPadding=0.1*cm,
+            textBottomPadding=0.1*cm,
             frameWidth=9*cm,
             frameHeight=3.1*cm,
-            frameHPosition=2.5*cm,
+            frameHPosition=2*cm,
             frameVPosition=6.2*cm,
             showBoundary=False,
         )
@@ -218,11 +230,9 @@ def create_document(title, author='', filename='Output.pdf', subject=''):
         date = pd.Timestamp.now(tz='CET').date()
 
         # Text
-        text = ("""{city}{date_day}. {date_month} {date_year}""").format(
+        text = ("""{city}{date}""").format(
             city=city+', ' if city!='' else '',
-            date_day=date.strftime("%d"),
-            date_month=date.strftime("%B"),
-            date_year=date.strftime("%Y"),
+            date=date.strftime('%d. %B %Y'),
         )
 
         # Create table frame

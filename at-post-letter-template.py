@@ -1,5 +1,5 @@
 ## Post AG - Vorlage mit Absender Letter Template using ReportLab
-# Last update: 2022-05-05
+# Last update: 2022-05-06
 
 
 # Template: https://www.einfach-brief.at/fe/vorlagen
@@ -42,18 +42,18 @@ else:
 # All flowables have an hAlign property: ('LEFT', 'RIGHT', 'CENTER' or 'CENTRE'). For paragraphs, which fill the full width of the frame, this has no effect.
 
 def create_table_frame(text, frameWidth, frameHeight, frameHPosition, frameVPosition, fontName='Arial', fontSize=11, textColor='black', textHAlign=TA_LEFT, textVAlign='TOP', textLeftPadding=0, textRightPadding=0, textTopPadding=0, textBottomPadding=0, showBoundary=True):
-    
+
     # Import or create global variables
     global document
-    
+
     ## Text
-    
+
     # Add HTML paragraph breaks
     text = re.sub(r'\n', '<br/>', text)
-    
+
     # Create ReportLab Paragraph object and apply font styles to text
     text = Paragraph(text, ParagraphStyle(name='', fontName=fontName, fontSize=fontSize, leading=(12 if fontSize >= 10 else 9), textColor=textColor, alignment=textHAlign), encoding='utf8')
-    
+
     # In case of long text: shrink to fit inside table frame
     text = KeepInFrame(
         maxWidth=0,
@@ -64,10 +64,10 @@ def create_table_frame(text, frameWidth, frameHeight, frameHPosition, frameVPosi
         #vAlign=textVAlign,
         #fakeWidth=False,
     )
-    
-    
+
+
     ## Table
-    
+
     # Create ReportLab Table object
     table = Table(
         data=[[text]],
@@ -78,7 +78,7 @@ def create_table_frame(text, frameWidth, frameHeight, frameHPosition, frameVPosi
         #hAlign=textHAlign,
         #vAlign=textVAlign,
     )
-    
+
     # Set table style
     table.setStyle(TableStyle([
         ('LEFTPADDING', (0, 0), (-1, -1), textLeftPadding),
@@ -87,7 +87,7 @@ def create_table_frame(text, frameWidth, frameHeight, frameHPosition, frameVPosi
         ('BOTTOMPADDING', (0, 0), (-1, -1), textBottomPadding),
         ('VALIGN', (0, 0), (-1, -1), textVAlign),
     ]))
-    
+
     # Horizontal alignment
     #if textHAlign==TA_CENTER:
     #    table.setStyle(TableStyle([
@@ -99,8 +99,8 @@ def create_table_frame(text, frameWidth, frameHeight, frameHPosition, frameVPosi
     #    ]))
     #else:
     #    pass
-    
-    
+
+
     # Show boundary
     if showBoundary==True:
         table.setStyle(TableStyle([
@@ -108,9 +108,9 @@ def create_table_frame(text, frameWidth, frameHeight, frameHPosition, frameVPosi
         ]))
     else:
         pass
-    
+
     table.wrap(0, 0)
-    
+
     # Table location
     table.drawOn(document, frameHPosition, (A4[1]-frameVPosition-frameHeight))
 
@@ -119,10 +119,10 @@ def create_table_frame(text, frameWidth, frameHeight, frameHPosition, frameVPosi
 
 # create_document
 def create_document(title, author='', filename='Output.pdf', subject=''):
-    
+
     # Import or create global variables
     global document
-    
+
     ## Create document
     document = Canvas(filename=filename, pagesize=A4, bottomup=1, pdfVersion=(1,4))
     document.setAuthor(author)
@@ -138,9 +138,9 @@ def create_document(title, author='', filename='Output.pdf', subject=''):
     pdfmetrics.registerFont(TTFont('Arial-BoldOblique', 'Arialbi.ttf'))
 
     pdfmetrics.registerFontFamily('Arial', normal='Arial', bold='Arial-Bold', italic='Arial-Oblique', boldItalic='Arial-BoldOblique')
-    
+
     for index, row in df.iterrows():
-        
+
         ### Document contents
 
         ## Title
@@ -212,7 +212,7 @@ def create_document(title, author='', filename='Output.pdf', subject=''):
             textHAlign=TA_LEFT,
             textVAlign='MIDDLE',
             textLeftPadding=0.5*cm,
-            textRightPadding=0.1*cm,
+            textRightPadding=2.5*cm, # Post Matrixcode Frankierung margin
             textTopPadding=0.1*cm,
             textBottomPadding=0.1*cm,
             frameWidth=9*cm,
@@ -258,7 +258,7 @@ def create_document(title, author='', filename='Output.pdf', subject=''):
 
         Sehr geehrte*r Anwender*in der Tages-Post,
 
-        bei diesem Dokument handelt es sich um eine einfache Vorlage für einen Brief, der über www.tages-post.at versendet werden kann und den Bestimmungen der Österreichischen Post bezüglich der Platzierung der Empfänger*innenadresse auf dem Briefbogen entspricht. 
+        bei diesem Dokument handelt es sich um eine einfache Vorlage für einen Brief, der über www.tages-post.at versendet werden kann und den Bestimmungen der Österreichischen Post bezüglich der Platzierung der Empfänger*innenadresse auf dem Briefbogen entspricht.
 
         Löschen Sie diesen Hinweis und ersetzen Sie den Text durch den von Ihnen gewünschten Text. Speichern Sie den Brief abschließend als PDF-Datei ab.
 
@@ -266,9 +266,9 @@ def create_document(title, author='', filename='Output.pdf', subject=''):
         *Wenn Sie Sendungen ins Ausland versenden, bitte das Land in GROSSBUCHSTABEN anführen.
 
         <b>Schriftarten, -größen und -stile:</b>
-        Verwenden Sie zugunsten der Lesbarkeit im fortlaufenden Text keine Schrift, die kleiner als 10 Punkt ist, sowie keine ausgefallenen Schriftarten, wie zum Beispiel Schreibschrift. Verzichten Sie auf ausgefallene Schriftstile, wie zum Beispiel Kapitälchen im fortlaufenden Text. Wir empfehlen folgende Schriftarten: Arial, Times, Calibri und Helvetica 
+        Verwenden Sie zugunsten der Lesbarkeit im fortlaufenden Text keine Schrift, die kleiner als 10 Punkt ist, sowie keine ausgefallenen Schriftarten, wie zum Beispiel Schreibschrift. Verzichten Sie auf ausgefallene Schriftstile, wie zum Beispiel Kapitälchen im fortlaufenden Text. Wir empfehlen folgende Schriftarten: Arial, Times, Calibri und Helvetica
 
-        Wir wünschen Ihnen viel Erfolg bei der Verfassung Ihrer Briefe. Laden Sie hierzu einfach Ihren abgespeicherten Brief im PDF-Format über www.tages-post.at hoch und wir drucken und versenden diesen gerne für Sie. 
+        Wir wünschen Ihnen viel Erfolg bei der Verfassung Ihrer Briefe. Laden Sie hierzu einfach Ihren abgespeicherten Brief im PDF-Format über www.tages-post.at hoch und wir drucken und versenden diesen gerne für Sie.
 
         Mit freundlichen Grüßen
         Ihr Tages-Post Team
@@ -287,9 +287,9 @@ def create_document(title, author='', filename='Output.pdf', subject=''):
             frameVPosition=10.75*cm,
             showBoundary=False,
         )
-        
+
         document.showPage()
-    
+
     ## Save document
     document.save()
 

@@ -21,7 +21,7 @@ This tool aims to fill variables (of a given dataset input) into the Austrian [P
 ## Python dependencies
 
 ```.ps1
-python -m pip install pandas reportlab
+python -m pip install babel pandas reportlab
 ```
 
 

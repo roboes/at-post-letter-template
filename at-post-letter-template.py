@@ -1,5 +1,5 @@
 ## Post AG - Vorlage mit Absender Letter Template using ReportLab
-# Last update: 2023-05-24
+# Last update: 2023-05-25
 
 
 # Template: https://www.einfach-brief.at/fe/vorlagen
@@ -17,6 +17,7 @@ globals().clear()
 import os
 import re
 
+from babel.dates import format_date
 import pandas as pd
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT, TA_RIGHT
 from reportlab.lib.pagesizes import A4
@@ -228,7 +229,8 @@ def create_document(*, df, title, author='', filename='Output.pdf', subject=''):
         # Text
         text = ("""{city}{date}""").format(
             city=city + ', ' if city != '' else '',
-            date=date.strftime('%d. %B %Y'),
+            # date=date.strftime('%d. %B %Y'),
+            date=format_date(date, format='dd. MMM yyyy', locale='de_DE')
         )
 
         # Create table frame

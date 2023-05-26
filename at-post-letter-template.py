@@ -113,10 +113,10 @@ def create_table_frame(*, document, text, frameWidth, frameHeight, frameHPositio
 
 
 # Create document
-def create_document(*, df, title, author='', filename='Output.pdf', subject=''):
+def create_document(*, df, title, author='', file_name='Output.pdf', subject=''):
 
     # Create document
-    document = Canvas(filename=filename, pagesize=A4, bottomup=1, pdfVersion=(1,4))
+    document = Canvas(filename=file_name, pagesize=A4, bottomup=1, pdfVersion=(1,4))
     document.setAuthor(author)
     document.setSubject(subject)
     document.setTitle(title)
@@ -309,4 +309,4 @@ df = pd.DataFrame(data=[
     ], index=None, columns=['name', 'gender', 'location_country', 'location_state', 'location_postal_code', 'location_city', 'location_street'], dtype=None)
 
 # Create PDF document
-create_document(df=df, title='Post AG - Vorlage mit Absender', author='Post AG', filename='Post AG - Vorlage mit Absender.pdf')
+create_document(df=df, title='Post AG - Vorlage mit Absender', author='Post AG', file_name='Post AG - Vorlage mit Absender.pdf')

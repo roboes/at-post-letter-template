@@ -78,7 +78,7 @@ def create_table_frame(
             textColor=textColor,
             alignment=textHAlign,
         ),
-        encoding='utf8',
+        encoding='utf-8',
     )
 
     # In case of long text: shrink to fit inside table frame

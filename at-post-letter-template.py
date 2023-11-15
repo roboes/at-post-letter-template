@@ -3,7 +3,7 @@
 
 
 """
-About: Fill variables (of a given dataset input) into the Austrian Post AG - Vorlage mit Absender letter template using ReportLab library in Python.
+About: Fill variables (of a given dataset input) into the Austrian "Post AG - Vorlage mit Absender" letter template using ReportLab library in Python.
 
 Template: https://www.einfach-brief.at/fe/vorlagen
 """

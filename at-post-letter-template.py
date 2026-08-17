@@ -21,8 +21,8 @@ globals().clear()
 import os
 import re
 
-from babel.dates import format_date
 import pandas as pd
+from babel.dates import format_date
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT, TA_RIGHT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
@@ -30,8 +30,7 @@ from reportlab.lib.units import cm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen.canvas import Canvas
-from reportlab.platypus import Paragraph, KeepInFrame, Table, TableStyle
-
+from reportlab.platypus import KeepInFrame, Paragraph, Table, TableStyle
 
 ###########
 # Functions

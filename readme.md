@@ -18,7 +18,7 @@ This tool aims to fill variables (of a given dataset input) into the Austrian [P
 
 ### Python dependencies
 
-```.ps1
+```ps1
 python -m pip install babel pandas reportlab
 ```
 
@@ -26,7 +26,7 @@ python -m pip install babel pandas reportlab
 
 #### `create_document`
 
-```.py
+```py
 create_document(df, title, author, file_name)
 ```
 
@@ -43,7 +43,7 @@ create_document(df, title, author, file_name)
 
 ### Code Workflow Example
 
-```.py
+```py
 # Create example DataFrame with names, gender and addresses
 df = pd.DataFrame(
     data=[
